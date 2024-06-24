@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('listings', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Foreign key constraint to users table
+            $table->string('pickup');
+            $table->string('dropoff');
+            $table->string('tags');
+            $table->dateTime('datetime');
+            $table->integer('passengers');
+            $table->enum('ride', ['offer', 'request']);
+            $table->longText('description');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('listings');
+    }
+};
